@@ -49,11 +49,8 @@ class Vector:
         Parametry: x
         
         Output: sprawdza czy w tablicy self.vector znajduje się element x"""
-        b = False
-        for i in range(0,len(self.vector)):
-            if self.vector[i] == x:
-                b = True
-        return b        
+        
+        return x in self.vector        
     def __add__(self, vector2):
         """
         Funkcja specialna add
