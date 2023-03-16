@@ -64,7 +64,7 @@ class Vector:
                 for i in range(0,len(self.vector)):
                    output.append(self.vector[i] + vector2.vector[i])
                 self.vector = output
-                return(output)
+                return(self.vector)
             else:
                 raise ValueError("Różne wymiary!")
         else:
@@ -73,7 +73,7 @@ class Vector:
                 for i in range(0,len(self.vector)):
                    output.append(self.vector[i] + vector2[i])
                 self.vector = output
-                return(output)
+                return(self.vector)
             else:
                 raise ValueError("Różne wymiary!")
             
@@ -90,7 +90,7 @@ class Vector:
                 for i in range(0,len(self.vector)):
                    output.append(self.vector[i] - vector2.vector[i])
                 self.vector = output
-                return(output)
+                return(self.vector)
             else:
                 raise ValueError("Różne wymiary!")
         else:
@@ -99,7 +99,7 @@ class Vector:
                 for i in range(0,len(self.vector)):
                    output.append(self.vector[i] - vector2[i])
                 self.vector = output
-                return(output)
+                return(self.vector)
             else:
                 raise ValueError("Różne wymiary!")
     def __mul__(self, a):
@@ -114,7 +114,8 @@ class Vector:
             output = []
             for i in range(0, len(self.vector)):
                 output.append(self.vector[i]*a)
-            return(output)
+            self.vector = output
+            return(self.vector)
         except:
             print("Zły format skalara")
         
@@ -153,11 +154,12 @@ class Vector:
         Parametry: brak
         
         Output: zwraca długość wektora reprezentowanego w formie listy """
-        x = self.vector[0]
-        y = self.vector[1]
-        z = self.vector[2]
-        l = math.sqrt(x**2 + y**2 + z**2)
-        return(l)
+  
+        sum = 0
+        for i in range(len(self.vector)):
+            sum += self.vector[i]**2   
+        
+        return(math.sqrt(l))
     
     def sum_elem(self):
         """
