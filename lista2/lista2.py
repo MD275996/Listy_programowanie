@@ -1,4 +1,5 @@
 import string
+import math
 from PIL import Image
 import os, sys
 from random import randint
@@ -35,7 +36,51 @@ def safe_copy(dane):
                 myzip.write(el)
                 myzip.close()
 
+def split_pdf(sciezka,liczba_stron):
+    mypdf = pypdf.PdfReader(sciezka)
+    strona = 0
+#pierwszy przypadek, pliki zawierające daną liczbę stron
+    if type(liczba_stron) == int:
+        ile = math.floor(len(mypdf.pages)/liczba_stron)
+        ogonek = len(mypdf.pages)%liczba_stron
+        
+        for i in range(ile):
+            nowypdf = pypdf.PdfWriter()
+            for j in range(liczba_stron):
+                nowypdf.add_page(mypdf.pages[strona])
+                strona+=1
+            with open("sample_cut_"+str(i)+".pdf","wb") as fp:
+                nowypdf.write(fp)
+        for k in range(ogonek):
+            nowypdf.add_page(mypdf.pages[strona])
+            strona+=1
+        with open("sample_cut_"+str(ile+1)+".pdf","wb") as fp:
+            nowypdf.write(fp)
+
+#drugi przypadek, pliki zawierają różne ilosci stron podane w postaci 14-27 w tablicy
+    elif type(liczba_stron) == list:
+        for i in range(len(liczba_stron)):
+            nowypdf = pypdf.PdfWriter()
+            przedział = liczba_stron[i].split("-")
+            
+            for j in range(int(przedział[0])-1,int(przedział[1])):
+                nowypdf.add_page(mypdf.pages[j])
+            with open("sample_cut_"+str(i)+".pdf","wb") as fp:
+                nowypdf.write(fp)  
+
+def dodawanie(dzialanie):
+    #dodawanie
+    dane = dzialanie.split("+")
+    wynik = 0
+    for el in dane:
+        wynik = wynik + int(el)
     
+    for k in range(len(dane)):
+        print(" "*(len(str(wynik))-len(dane[k]))+dane[k])
+    
+    print("+"+" "*(len(str(wynik))-1))
+    print("-"*len(str(wynik)))
+    print(wynik)  
 
 safe_copy(["katalog1","katalog2","katalog3"])
 
