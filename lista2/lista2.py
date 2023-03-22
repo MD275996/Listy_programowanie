@@ -5,12 +5,13 @@ import os, sys
 from random import randint
 from zipfile import ZipFile
 from datetime import date
+import PyPDF2 as pypdf
 
-# def passwd(n = 8, s=string.ascii_letters+string.digits+string.punctuation):
-#     haslo = ""
-#     for i in range(n):
-#         haslo += s[randint(0,len(s)-1)]
-#     return haslo
+def passwd(n = 8, s=string.ascii_letters+string.digits+string.punctuation):
+    haslo = ""
+    for i in range(n):
+        haslo += s[randint(0,len(s)-1)]
+    return haslo
 
 
 def mini(sciezka,w,h,nowa_nazwa):
