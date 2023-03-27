@@ -19,7 +19,7 @@ def mini(sciezka,w,h,nowa_nazwa):
     stare = Image.open(sciezka)
     nowe = stare.resize((w,h))
     nowe.save(nowa_nazwa+".jpg")
-    #jak ma działać podawanie ścieżki do pliku?
+    #jak ma dzialac podawanie sciezki do pliku?
  
 def safe_copy(dane):
     dzisiaj = date.today()
@@ -58,7 +58,7 @@ def split_pdf(sciezka,liczba_stron):
         with open("sample_cut_"+str(ile+1)+".pdf","wb") as fp:
             nowypdf.write(fp)
 
-#drugi przypadek, pliki zawierają różne ilosci stron podane w postaci 14-27 w tablicy
+#drugi przypadek, pliki zawieraja rozne ilosci stron podane w postaci 14-27 w tablicy
     elif type(liczba_stron) == list:
         for i in range(len(liczba_stron)):
             nowypdf = pypdf.PdfWriter()
