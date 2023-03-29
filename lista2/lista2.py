@@ -75,19 +75,53 @@ def water_mark():
     znak_wodny.putalpha(127)    
     znak_wodny.save("alpha.png")
 
-def dodawanie(dzialanie):
-    #dodawanie
-    dane = dzialanie.split("+")
-    wynik = 0
-    for el in dane:
-        wynik = wynik + int(el)
-    
-    for k in range(len(dane)):
-        print(" "*(len(str(wynik))-len(dane[k]))+dane[k])
-    
-    print("+"+" "*(len(str(wynik))-1))
-    print("-"*len(str(wynik)))
-    print(wynik)  
+def slupek(dzialanie):
 
-safe_copy(["katalog1","katalog2","katalog3"])
 
+    #robimy słupek pojedyńczego działania (dodawania lub mnozenia)
+
+    if "+" in dzialanie:
+
+        dane = dzialanie.split("+")     #dodawanie (i odejmowanie) są ostatnimi działaniami jakie podejmujemy, więc jeśli po rozbiciu, elementy tablicy będą zawierały znaki mnożenia, nimi zajmiemy się najpierw
+        
+        wynik = 0
+        for el in dane:
+            wynik = wynik + int(el)     #obliczamy wynik, by poznać jak szeroki ma być słupek
+        
+        for k in range(len(dane)):      #w tej pętli rozpisujemy słupek, odpowiednio sformatowany
+            print(" "*(len(str(wynik))-len(str(dane[k])))+str(dane[k])) 
+
+                                        #zakończenie słupka, podkreślenie i wynik
+        print("+"+" "*(len(str(wynik))-1))
+        print("-"*len(str(wynik)))
+        print(wynik)
+    elif "*" in dzialanie:
+        dane = dzialanie.split("*")
+
+        wynik = int(dane[0])*int(dane[1])
+
+        spacja_lewo = len(str(wynik))
+        spacja_prawo = 0
+
+        #zaczynamy pisac slupek mnozenia
+        print(" "*(spacja_lewo-len(dane[0]))+dane[0])
+        print(" "*(spacja_lewo-len(dane[1]))+dane[1])
+        print("*"+" "*(spacja_lewo-1))
+        print("="*spacja_lewo)
+        #piszemy kazde mnozenie osobno
+        for i in range(len(dane[0])):
+            print(" "*(spacja_lewo-len(str(int(dane[0][-i+1])*int(dane[1])))-spacja_prawo) + str(int(dane[0][-(i+1)])*int(dane[1])) + " "*spacja_prawo)
+            spacja_prawo+=1
+        print("+" + " "*spacja_lewo)    
+        print("="*spacja_lewo)
+        print(wynik)
+        return(wynik)
+                                    #po pomnożeniu dostajemy nową tablicę, i na niej wykonujemy mnożenie
+
+# def mnozenie(dzialanie):
+#     if(len(dane)>2):
+#         dane[0] = mnozenie(dane.pop(1)+"*"+dane[0])
+#     else:
+
+
+slupek("12*15")
