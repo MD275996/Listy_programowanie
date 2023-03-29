@@ -68,6 +68,12 @@ def split_pdf(sciezka,liczba_stron):
                 nowypdf.add_page(mypdf.pages[j])
             with open("sample_cut_"+str(i)+".pdf","wb") as fp:
                 nowypdf.write(fp)  
+             
+def water_mark():
+    znak_wodny = Image.open("waterMark.png")
+    znak_wodny = znak_wodny.convert("RGBA")
+    znak_wodny.putalpha(127)    
+    znak_wodny.save("alpha.png")
 
 def dodawanie(dzialanie):
     #dodawanie
