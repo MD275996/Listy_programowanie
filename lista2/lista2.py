@@ -1,27 +1,69 @@
 import string
 import math
 from PIL import Image
-import os, sys
 from random import randint
 from zipfile import ZipFile
 from datetime import date
 import PyPDF2 as pypdf
 
-def passwd(n = 8, s=string.ascii_letters+string.digits+string.punctuation):
+def passwd(n = 8, symbols=string.ascii_letters+string.digits+string.punctuation):
+    """
+    Opis: funkcja generująca haslo
+
+    Argumenty:
+        n : int 
+            określa jak długie będzie wygenerowane hasło(domyślnie = 0)
+                
+        s : str, list 
+            określa zbiór znaków z którego brane będą elementy do utworzenia hasła (domyślnie cyfry, litery i znaki interpunkcyjne ASCII)
+
+    Zwraca:
+        wygenerowane hasło o długosci 'n' i znakach z 's'
+    
+    """
     haslo = ""
     for i in range(n):
-        haslo += s[randint(0,len(s)-1)]
+        haslo += symbols[randint(0,len(symbols)-1)]
     return haslo
 
 
 def mini(sciezka,w,h,nowa_nazwa):
+    """
+    Opis: 
+        Generuje miniaturę obrazu w formacie jpg
 
+    Argumenty:
+        sciezka : str
+            Ścieżka do zdjęcia, może być pełna np 'C:\\Users\\admin\\Desktop\\Listy_programowanie\\lista2\\image.jpg' lub jeśli plik znajduje się w tym samym folderze co program, po prostu 'image.jpg'  
+        w : int
+            Szerokość miniatury
+        h : int
+            Wysokość miniatury
+        nowa_nazwa : str
+            Nazwa nowo powstałej miniatury, jeśli podana jest ścieżka, określa to miejsce zapisu, domyślnie w folderze programu
+
+    Zwraca:
+        Zapisuje w podanym miejscu nową miniaturę
+    
+    """
     stare = Image.open(sciezka)
     nowe = stare.resize((w,h))
     nowe.save(nowa_nazwa+".jpg")
     #jak ma dzialac podawanie sciezki do pliku?
  
 def safe_copy(dane):
+    """
+    Opis:
+        Tworzy kopię bezpieczeństwa zapisując wybrane katalogi do archiwów zip
+
+    Argumenty:
+        dane : str, list
+                ścieżka(ścieżki) do katalogów z których mają powstać archiwa
+
+    Zwraca:
+        Archiwum zapisane w katalogu programu
+
+    """
     dzisiaj = date.today()
     if type(dane) == str:
         katalog = dane.split("\\")[-1]
@@ -38,6 +80,21 @@ def safe_copy(dane):
                 myzip.close()
 
 def split_pdf(sciezka,liczba_stron):
+    """
+    Opis:
+        Dzieli duży plik PDF na pewną liczbę mniejszych plików o zadanych przez użytkownika liczbach stron
+    
+    Argumenty:
+        sciezka : str
+            sciezka do pliku pdf który ma być podzielony
+        
+        liczba_stron : int, list
+            w przypadku int - liczba stron, którą ma zawierać mniejszy, podzielony pdf
+            w przypadku listy - przedziały stron, które mają zawierać podzielone pliki, np. ['1-9','10-18']
+    
+    Zwraca:
+        Zapisuje podzielone pliki pdf w katalogu programu
+    """
     mypdf = pypdf.PdfReader(sciezka)
     strona = 0
 #pierwszy przypadek, pliki zawierające daną liczbę stron
@@ -84,7 +141,17 @@ def water_mark(zdjecie):
     nowyobraz.save("zaznaczony.png")
 
 def slupek(dzialanie):
-
+    """
+    Opis:
+        Generuje 'słupek' dla podanego działania matematycznego
+    
+    Argumenty:
+        dzialanie : str
+            Działanie matematyczne dodawania, odejmowania lub mnożenia np. '235+72', '235-72', '15*19'
+    
+    Zwraca:
+        Wypisuje słupek liczenia pisemnego danego działania
+    """
 
 
     if "+" in dzialanie or "-" in dzialanie:
@@ -134,6 +201,4 @@ def slupek(dzialanie):
         return(wynik)
                                     #po pomnożeniu dostajemy nową tablicę, i na niej wykonujemy mnożenie
 
-
-
-water_mark("images.jpg")
+safe_copy("C:\\Users\\admin\\Desktop\\md")
