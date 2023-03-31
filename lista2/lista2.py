@@ -69,24 +69,40 @@ def split_pdf(sciezka,liczba_stron):
             with open("sample_cut_"+str(i)+".pdf","wb") as fp:
                 nowypdf.write(fp)  
              
-def water_mark():
+def water_mark(zdjecie):
     znak_wodny = Image.open("waterMark.png")
-    znak_wodny = znak_wodny.convert("RGBA")
-    znak_wodny.putalpha(127)    
-    znak_wodny.save("alpha.png")
+    obraz = Image.open(zdjecie)
+    obraz = obraz.convert("RGBA")
+    #znak_wodny = znak_wodny.convert("RGBA")
+    znak_wodny.putalpha(70)
+    znak_wodny.save("znak_wodny.png")
+    znak_wodny = znak_wodny.resize((50,50)) 
+    
+    nowyobraz = Image.new("RGBA",obraz.size,)
+    nowyobraz.paste(obraz)
+    nowyobraz.paste(znak_wodny,(round(nowyobraz.size[0]/2),round(nowyobraz.size[1]/2)))
+    nowyobraz.save("zaznaczony.png")
 
 def slupek(dzialanie):
 
 
-    #robimy słupek pojedyńczego działania (dodawania lub mnozenia)
 
-    if "+" in dzialanie:
+    if "+" in dzialanie or "-" in dzialanie:
+                                        #przyjmujemy że nie piszemy '-102+77'
 
-        dane = dzialanie.split("+")     #dodawanie (i odejmowanie) są ostatnimi działaniami jakie podejmujemy, więc jeśli po rozbiciu, elementy tablicy będą zawierały znaki mnożenia, nimi zajmiemy się najpierw
+        dane = dzialanie.split("+")     #rozdzielamy elementy po +, zostaną elementy takie jak '217-53'
+        minusy = []
+        for i in range(len(dane)):      #w tej pętli szukamy elementów przed którymi stoi minus i wyciągamy je, wsadzamy do osobnej tablicy i dodajemy na koniec pierwotnej tablicy
+            if "-" in dane[i]:
+                temp = dane[i]
+                temp = temp.split("-") 
+                dane[i] = temp[0]
+                for j in range(1,len(temp)):
+                    minusy.append("-" + temp[j])
+        for al in minusy:
+            dane.append(al)
         
-        wynik = 0
-        for el in dane:
-            wynik = wynik + int(el)     #obliczamy wynik, by poznać jak szeroki ma być słupek
+        wynik = eval(dzialanie)    #obliczamy wynik, by poznać jak szeroki ma być słupek
         
         for k in range(len(dane)):      #w tej pętli rozpisujemy słupek, odpowiednio sformatowany
             print(" "*(len(str(wynik))-len(str(dane[k])))+str(dane[k])) 
@@ -100,7 +116,7 @@ def slupek(dzialanie):
 
         wynik = int(dane[0])*int(dane[1])
 
-        spacja_lewo = len(str(wynik))
+        spacja_lewo = len(str(wynik)) # ustawiamy 'marginesy' dla ładnego wypisania słupka
         spacja_prawo = 0
 
         #zaczynamy pisac slupek mnozenia
@@ -109,8 +125,8 @@ def slupek(dzialanie):
         print("*"+" "*(spacja_lewo-1))
         print("="*spacja_lewo)
         #piszemy kazde mnozenie osobno
-        for i in range(len(dane[0])):
-            print(" "*(spacja_lewo-len(str(int(dane[0][-i+1])*int(dane[1])))-spacja_prawo) + str(int(dane[0][-(i+1)])*int(dane[1])) + " "*spacja_prawo)
+        for i in range(1,len(dane[0])+1):
+            print(" "*(spacja_lewo-len(str(int(dane[0][-i])*int(dane[1])))-spacja_prawo) + str(int(dane[0][-(i)])*int(dane[1])) + " "*spacja_prawo)
             spacja_prawo+=1
         print("+" + " "*spacja_lewo)    
         print("="*spacja_lewo)
@@ -118,10 +134,6 @@ def slupek(dzialanie):
         return(wynik)
                                     #po pomnożeniu dostajemy nową tablicę, i na niej wykonujemy mnożenie
 
-# def mnozenie(dzialanie):
-#     if(len(dane)>2):
-#         dane[0] = mnozenie(dane.pop(1)+"*"+dane[0])
-#     else:
 
 
-slupek("12*15")
+water_mark("images.jpg")
