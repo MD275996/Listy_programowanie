@@ -1,5 +1,6 @@
 import string
 import math
+import os
 from PIL import Image
 from random import randint
 from zipfile import ZipFile
@@ -14,11 +15,11 @@ def passwd(n = 8, symbols=string.ascii_letters+string.digits+string.punctuation)
         n : int 
             określa jak długie będzie wygenerowane hasło(domyślnie = 0)
                 
-        s : str, list 
+        symbols : str
             określa zbiór znaków z którego brane będą elementy do utworzenia hasła (domyślnie cyfry, litery i znaki interpunkcyjne ASCII)
 
     Zwraca:
-        wygenerowane hasło o długosci 'n' i znakach z 's'
+        wygenerowane hasło o długosci 'n' i znakach z 'symbols'
     
     """
     haslo = ""
@@ -49,7 +50,7 @@ def mini(sciezka,w,h,nowa_nazwa):
     stare = Image.open(sciezka)
     nowe = stare.resize((w,h))
     nowe.save(nowa_nazwa+".jpg")
-    #jak ma dzialac podawanie sciezki do pliku?
+
  
 def safe_copy(dane):
     """
@@ -68,7 +69,10 @@ def safe_copy(dane):
     if type(dane) == str:
         katalog = dane.split("\\")[-1]
         with ZipFile(str(dzisiaj)+"_"+katalog+".zip","w") as myzip:
-            myzip.write(dane)
+            for folder, podfolder, pliki in os.walk(dane):
+                for nazwa_pliku in pliki:
+                    plik_sciezka = os.path.join(folder, nazwa_pliku)
+                    myzip.write(plik_sciezka)
             myzip.close()
     
     
@@ -76,7 +80,11 @@ def safe_copy(dane):
         for el in dane:
             katalog = el.split("\\")[-1]
             with ZipFile(str(dzisiaj)+"_"+katalog+".zip","w") as myzip:
-                myzip.write(el)
+                for folder, podfolder, pliki in os.walk(el):
+                    for nazwa_pliku in pliki:
+                        plik_sciezka = os.path.join(folder, nazwa_pliku)
+                        myzip.write(plik_sciezka)
+
                 myzip.close()
 
 def split_pdf(sciezka,liczba_stron):
@@ -201,4 +209,4 @@ def slupek(dzialanie):
         return(wynik)
                                     #po pomnożeniu dostajemy nową tablicę, i na niej wykonujemy mnożenie
 
-safe_copy("C:\\Users\\admin\\Desktop\\md")
+split_pdf("sample.pdf",3)
