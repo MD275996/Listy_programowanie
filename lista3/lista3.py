@@ -1,3 +1,4 @@
+import requests
 import PyPDF2 as pypdf
 
 #liczba dni jest do ustalenia, dla sprawdzenia w folderze jeden plik nie spełnia wymagań, ma wykonać kopie wszystkich podfolderów
@@ -8,14 +9,16 @@ def zad1(rozszrz, katalogi, liczba_dni = 3):
 def zad2():                                  
     return 0
 
-#Działanie odwrotne do zadania z listy 2, użyć by sprawdzić działanie, porównać pliki
+#W połowie gotowe
 def zad3(lista_pdf):
     nowypdf = pypdf.PdfWriter()
     for el in lista_pdf:
-        obecny_pdf = pypdf.PdfFileReader(el)
+        obecny_pdf = pypdf.PdfReader(el)
         for i in range(len(obecny_pdf.pages)):
             nowypdf.add_page(obecny_pdf.pages[i])
     nowypdf.write("sklejka.pdf")
+    
+    #TO DO: sprawdzenie czy to są te same pliki
     
 
 
@@ -49,8 +52,8 @@ def zad5(tekst):
                 
 
 
-# nie działa w nieskończoność, ma 5 prób,
+# nie działa w nieskończoność, ma 5 prób, go touch grass
 def zad6():
     return 0
 
-zad3(["sample_cut_0.pdf","sample_cut_1.pdf","sample_cut_2.pdf","sample_cut_3.pdf","sample_cut_4.pdf","sample_cut_5.pdf","sample_cut_6.pdf","sample_cut_7.pdf"])
+zad3(["sample_cut_0.pdf","sample_cut_1.pdf","sample_cut_2.pdf","sample_cut_3.pdf"])
