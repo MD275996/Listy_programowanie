@@ -35,7 +35,8 @@ def zad1(rozszrz, katalogi, liczba_dni = 3):
 
 #Przeczytać o CRTL, w windowsie: \r \n, a w unixie jest tylko \r, zalecane użycie Notepad++ -> Edycja -> zmiana znaku końca linii
 def zad2():                                  
-    return 0
+    file = open("linie.txt")
+    file.read()
 
 #W połowie gotowe
 def zad3(lista_pdf):

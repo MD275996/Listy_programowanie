@@ -117,10 +117,11 @@ def split_pdf(sciezka,liczba_stron):
                 strona+=1
             with open("sample_cut_"+str(i)+".pdf","wb") as fp:
                 nowypdf.write(fp)
+        nowypdf = pypdf.PdfWriter()
         for k in range(ogonek):
             nowypdf.add_page(mypdf.pages[strona])
             strona+=1
-        with open("sample_cut_"+str(ile+1)+".pdf","wb") as fp:
+        with open("sample_cut_"+str(ile)+".pdf","wb") as fp:
             nowypdf.write(fp)
 
 #drugi przypadek, pliki zawieraja rozne ilosci stron podane w postaci 14-27 w tablicy
@@ -209,4 +210,4 @@ def slupek(dzialanie):
         return(wynik)
                                     #po pomnożeniu dostajemy nową tablicę, i na niej wykonujemy mnożenie
 
-split_pdf("sample.pdf",3)
+split_pdf("sample.pdf",5)
