@@ -7,6 +7,7 @@ import os
 from zipfile import ZipFile
 import qrcode
 import cv2
+import aspose.words as aw
 
 
 def zad1(rozszrz, katalogi, liczba_dni = 3):
@@ -79,7 +80,56 @@ def zad2(plik):
     #     print(new_text)
     #     file2.close()
 
-#W połowie gotowe
+def compare_pdf(nowy_pdf, stary_pdf):
+    """
+    Opis:  
+        Funkcja pomocnicza, sprawdza czy dwa pdf są identyczne.
+        Działa dla prostych pdf-ów, źródło kodu: https://blog.aspose.com/pl/words/compare-pdf-files-in-python/
+
+    Argumenty:
+        nowy_pdf : str
+            ścieżka do pierwszego pliku pdf
+        stary_pdf : str
+            ścieżka do drugiego pliku pdf
+                
+    Zwraca:
+        Wypisuje na ekran odpowiedź czy dwa pliki pdf są identyczne
+    
+    """
+
+    #załadowanie plików pdf
+    pdf1 = aw.Document(nowy_pdf)
+    pdf2 = aw.Document(stary_pdf)
+
+    #konwertuje na dokument WORD
+    pdf1.save("nowy.docx", aw.SaveFormat.DOCX)
+    pdf2.save("stary.docx", aw.SaveFormat.DOCX)
+
+    doc1 = aw.Document("nowy.docx")
+    doc2 = aw.Document("stary.docx")
+
+    #ustalenie opcji porównania
+    options = aw.comparing.CompareOptions()            
+    options.ignore_formatting = True
+    options.ignore_headers_and_footers = True
+    options.ignore_case_changes = True
+    options.ignore_tables = True
+    options.ignore_fields = True
+    options.ignore_comments = True
+    options.ignore_textboxes = True
+    options.ignore_footnotes = True
+
+    doc1.compare(doc2, "user", date.today(), options)
+
+    if(doc1.revisions.count == 0):
+        print("pliki są identyczne")
+    else:
+        print("pliki nie są te same")
+
+    os.remove("nowy.docx")
+    os.remove("stary.docx")
+
+
 def zad3(lista_pdf):
     """
     Opis:  
@@ -90,7 +140,8 @@ def zad3(lista_pdf):
             lista ścieżek do plików pdf, które mają być złączone w jeden
                 
     Zwraca:
-        plik pdf powstały z zadanych, zapisany jako 'sklejka.pdf' w folderze programu
+        plik pdf powstały z zadanych, zapisany jako 'sklejka.pdf' w folderze programu,
+        dodatkowo informuje czy operacja się udałą
     
     """
     nowypdf = pypdf.PdfWriter()
@@ -100,13 +151,9 @@ def zad3(lista_pdf):
             nowypdf.add_page(obecny_pdf.pages[i])
     nowypdf.write("sklejka.pdf")
 
-    #porównywanie stron nie działa
-    # starypdf = pypdf.PdfReader("sample.pdf")
-    # if len(nowypdf.pages) == len(starypdf.pages):
-    #     for i in range(len(nowypdf.pages)):
-    #         if nowypdf.pages[i] != starypdf.pages[i]:
-    #             print("F")
-    #     print("T")
+    #sprawdzenie czy operacja się powiodła
+    compare_pdf("sklejka.pdf","sample.pdf")
+    
     
     
 
@@ -142,8 +189,6 @@ def zad4(dane):
 
     
 
-
-#gotowe
 def zad5(tekst):
     """
     Opis:   
@@ -181,7 +226,6 @@ def zad5(tekst):
                 
 
 
-# gotowe
 def zad6():
     """
     Opis: 
@@ -230,6 +274,6 @@ def zad6():
     
 
 
-#zad3(["sample_cut_0.pdf","sample_cut_1.pdf","sample_cut_2.pdf","sample_cut_3.pdf"])
+zad3(["sample_cut_0.pdf","sample_cut_1.pdf","sample_cut_2.pdf","sample_cut_3.pdf"])
 #zad5("()()([])")
-zad6()
+#zad6()

@@ -210,4 +210,4 @@ def slupek(dzialanie):
         return(wynik)
                                     #po pomnożeniu dostajemy nową tablicę, i na niej wykonujemy mnożenie
 
-split_pdf("sample.pdf",5)
+split_pdf("sample.pdf",2)
