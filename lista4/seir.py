@@ -51,10 +51,3 @@ if __name__ == "__main__":
 
     n0, s, e, i, r, beta, sigma, gamma = tab_arg #wartości początkowe
     seir_model(n0, s, e, i, r, beta, sigma, gamma)
-
-
-
-
-
-
-

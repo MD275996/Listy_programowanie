@@ -25,10 +25,11 @@ right_frame.pack(side=RIGHT)
 #dodamy elementy do pierwszego okna
 
 waluty=["PLN", "EUR"]           #dane do pobrania ze strony NBP
-waluta = StringVar(value = waluty[0])
+waluta1 = StringVar(value = waluty[0])
+waluta2 = StringVar(value = waluty[1])
 
 #pierwszy droplist
-optionmenu_opcja1 = OptionMenu(frame, waluta, *waluty) #gwiazdka rozpakowywuje dane z tablicy
+optionmenu_opcja1 = OptionMenu(frame, waluta1, *waluty) #gwiazdka rozpakowywuje dane z tablicy
 optionmenu_opcja1.pack(expand=TRUE, fill= BOTH, side=RIGHT,  padx= 50)
 
 #button zmieniający
@@ -36,20 +37,28 @@ button_zamiana = Button(frame, text="zamiana")
 button_zamiana.pack(side=RIGHT, padx=50)
 
 #drugi droplist
-optionmenu_opcja2 = OptionMenu(frame, waluta, *waluty)
+optionmenu_opcja2 = OptionMenu(frame, waluta2, *waluty)
 optionmenu_opcja2.pack(expand=TRUE, fill= BOTH, padx= 50)
 
 #lewa strona
 
-#input
+entry_waluta = Entry(left_frame)
+entry_waluta.pack()
 
-#button
+button_oblicz = Button(left_frame,text="oblicz")
+button_oblicz.pack()
 
 #prawa strona
 
-#label
+wynik = StringVar()
+wynik.set("Tutaj wyświetli się wynik")
 
-#button
+label_wynik = Label(right_frame, textvariable=wynik)
+label_wynik.pack()
+
+
+button_zakoncz = Button(right_frame, text="zakończ")
+button_zakoncz.pack()
 
 root.title("Kalkulator walut")
 root.mainloop()
