@@ -77,5 +77,14 @@ def random_graph(n,p):
         filepath = os.path.join(folder,filename)
         os.remove(filepath)
 
-random_graph(7,0.4)
+
+# ==============================================================================================================================================================
+def watts_strogatz_graph(n,k,p):
+    G = nx.watts_strogatz_graph(n,k,p)
+    ax = plt.subplot()     
+    nx.draw(G,with_labels=True)
+    plt.show()
+
+
+#random_graph(7,0.4)
 #umożliwić wykonywanie z linii komend
