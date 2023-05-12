@@ -14,6 +14,8 @@ gamma = 0.4
 tab_arg = sys.argv
 tab_arg.remove(tab_arg[0])
 
+
+#to boli w oczy, ale to działa
 if len(tab_arg)%2==0:
     while len(tab_arg)>1:
         arg = tab_arg.pop()

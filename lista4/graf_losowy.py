@@ -7,7 +7,29 @@ import random as rand
 from PIL import Image
 import os
 
-def random_graph(n,p):
+def random_graph(n = 10, p = 0.3):
+    """
+    Opis:  
+        Funkcja która:
+            1. za pomocą biblioteki networkx tworzy losowy graf o n wierzchołkach i rysuje połączenia między 
+            nimi z prawdopodobieństwem wystąpienia p
+            2. tworzy animację błądzenia agenta po grafie, wybiera jeden losowy wierzchołek jako punkt startowy,
+             oznacza go kolorem pomarańczowym, po czym wybiera losowo jednego sąsiada i przenosi się tam, zaznaczając
+             go kolorem pomarańczowym, jedno przejście oznacza jedną klatkę animacji
+
+    Argumenty:
+        n : int 
+            określa:
+                - ilość wierzchołków które zostaną narysowane na grafie (domyślnie 10)
+                - ilość klatek animacji +1
+                
+        p : float
+            określa prawdopodobieństwo wystąpienia połączenia pomiędzy dwoma wierzchołkami, ułamek między 0 i 1 (domyślnie 0.3)
+
+    Zwraca:
+        Plik gif zapisany w katalogu programu przedstawiający błądzenie agetna po grafie        
+    
+    """    
     G = nx.Graph()                                              #stwarzamy graf
     G.add_nodes_from(range(n))                                  #dodajemy elementy do grafa(nodes)                                  
     
@@ -79,7 +101,30 @@ def random_graph(n,p):
 
 
 # ==============================================================================================================================================================
-def watts_strogatz_graph(n,k,p):
+def watts_strogatz_graph(n = 10, k = 2 ,p = 0.5):
+    """
+    Opis:  
+        Funkcja która za pomocą biblioteki networkx generuje gotowy graf Watts-a Strogatz-a, a następnie tworzy
+        animację przemieszczania się agenta po tym grafie.
+
+    Argumenty:
+        n : int 
+            określa:
+                - ilość wierzchołków które zostaną narysowane na grafie (domyślnie 10)
+                - ilość klatek animacji +1
+
+        k : int
+            określa ilość sąsiadów z jaką zostanie połączony każdy wierzchołek, jeśli k to liczba nieparzysta,
+            to bierze k-1
+                
+        p : float
+            określa prawdopodobieństwo zamiany istniejącego połączenia pomiędzy dwoma sąsiednimi wierzchołkami,
+            na połączenie z losowym innym wierzchołkiem
+
+    Zwraca:
+        Plik gif zapisany w katalogu programu przedstawiający błądzenie agetna po grafie Watts-a Strogatz-a   
+    
+    """  
     G = nx.watts_strogatz_graph(n,k,p)
     pos = nx.spring_layout(G)
 
@@ -135,7 +180,27 @@ def watts_strogatz_graph(n,k,p):
 
 
 
-def barabasi_albert_graph(n,k):
+def barabasi_albert_graph(n=15,k=2):
+    """
+    Opis:  
+        Funkcja która za pomocą biblioteki networkx generuje gotowy graf Barabasi-Alberta, a następnie tworzy
+        animację przemieszczania się agenta po tym grafie.
+
+    Argumenty:
+        n : int 
+            określa:
+                - ilość wierzchołków które zostaną narysowane na grafie (domyślnie 15)
+                - ilość klatek animacji +1
+
+        k : int
+            określa ilość połączeń, do połączenia nowszych wierzchołków z istniejącymi (domyślnie 2)
+                
+
+    Zwraca:
+        Plik gif zapisany w katalogu programu przedstawiający błądzenie agetna po grafie Watts-a Strogatz-a   
+    
+    """
+
     G = nx.barabasi_albert_graph(n,k)
     pos = nx.spring_layout(G)
 
@@ -147,9 +212,10 @@ def barabasi_albert_graph(n,k):
     #wybór losowego elementu
     agent = rand.choice(list(G.nodes))
 
+    #w tablicy kolorów w miejsce odpowiadajęcemu aktywnemu agentowi przypisuje wyróżniający kolor
     my_node_list_colors[agent] = "orange"
 
-    nx.draw_networkx_nodes(G,pos,node_color=my_node_list_colors)            #rysujemy nasz graf z aktywnym elementem
+    nx.draw_networkx_nodes(G,pos,node_color=my_node_list_colors)            #rysujemy nasz graf 
     nx.draw_networkx_edges(G,pos)
     nx.draw_networkx_labels(G,pos)
     plt.savefig("zdj_bldz_lsw\\fig0.png")
@@ -161,6 +227,7 @@ def barabasi_albert_graph(n,k):
         adj = list(G.adj[agent].keys())                                                   #sąsiedzi naszego losowego agenta     
         agent = rand.choice(adj)                                                          #nowy agent
 
+        #zaznaczamy kolor nowego agenta na pomarańczowy, starego znowu na niebieski
         my_node_list_colors[stary_agent]="blue"
         my_node_list_colors[agent]="orange"
 
@@ -185,7 +252,6 @@ def barabasi_albert_graph(n,k):
         os.remove(filepath)
     
 
-#random_graph(7,0.4)
+#random_graph(15,0.2)
 #watts_strogatz_graph(10,4,0)
-barabasi_albert_graph(10,3)
-#umożliwić wykonywanie z linii komend
+barabasi_albert_graph(15,2)

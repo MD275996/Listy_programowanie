@@ -5,6 +5,42 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def seir_model(n0, s, e, i, r,beta, sigma, gamma):
+    """
+        Opis:  
+            Funkcja symuluje przebieg epidemii według modelu SEIR i rysuje wykres przedstawiający zachowanie
+            grup modelu w trakcie trwania epidemii
+
+        Argumenty:
+            n0 : int
+                określa liczbę ludności, na której przeprowadzana jest symulacja
+            
+            s  : int
+                określa liczbę zdrowych ludzi
+            
+            e  : int
+                określa liczbę zarażonych ludzi
+            
+            i  : int
+                określa liczbę zarażających
+            
+            r  : int
+                określa liczbę ozdrowiałych  
+
+            beta : float
+                określa wskaźnik infekcji (jej tempo rozprzestrzeniania się)
+            
+            sigma : float
+                określa czas inkubacji, czyli kiedy osoba z zarażonej stanie się zarażającą
+
+            gamma : float
+                określa wskaźnik ozdrowień
+
+            
+                
+        Zwraca:
+            Wypisuje wykres przedstawiający przebieg symulacji epidemii      
+        
+        """    
 
 #zdeklarowanie tablic w których będą przechowywane wartości, gdzie index oznacza daną jednostę czasu, do wykresów
     tablica_S=[s]
@@ -12,7 +48,7 @@ def seir_model(n0, s, e, i, r,beta, sigma, gamma):
     tablica_I=[i]
     tablica_R=[r]
 
-    time = 500 #dni
+    time = 150 #dni
     for t in range(time):
         tS = s + -1*(beta*s*i)/n0
         tE = e + (beta*s*i)/n0 - sigma*e
@@ -28,7 +64,7 @@ def seir_model(n0, s, e, i, r,beta, sigma, gamma):
     #mamy teraz dane, warto je przemienić na procenty, a potem wsadzić w wykres
 
 
-    x = np.array(range(0,501))
+    x = np.array(range(0,time+1))
     plt.figure(figsize=(5,2.7), layout="constrained")
     plt.plot(x,tablica_S, label="Susceptible")
     plt.plot(x,tablica_E, label="Exposed")
