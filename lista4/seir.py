@@ -61,11 +61,10 @@ def seir_model(n0, s, e, i, r,beta, sigma, gamma):
         tablica_R.append(tR)
         s, e, i, r = tS, tE, tI, tR
 
-    #mamy teraz dane, warto je przemienić na procenty, a potem wsadzić w wykres
-
 
     x = np.array(range(0,time+1))
-    plt.figure(figsize=(5,2.7), layout="constrained")
+    
+    plot = plt.figure(figsize=(5,2.7), layout="constrained")
     plt.plot(x,tablica_S, label="Susceptible")
     plt.plot(x,tablica_E, label="Exposed")
     plt.plot(x,tablica_I, label="Infectious")
@@ -75,15 +74,23 @@ def seir_model(n0, s, e, i, r,beta, sigma, gamma):
     plt.title("SEIR Model")
     plt.legend()
     plt.show()
+    return plot
+    
 
 
 if __name__ == "__main__":
     tab_arg = list(sys.argv) #bardzo ważne!!!
     tab_arg.remove(tab_arg[0])
-    print(tab_arg)
+    #print(tab_arg)
     for i in range(len(tab_arg)):
         tab_arg[i] = float(tab_arg[i])
-    print(tab_arg)
+    #print(tab_arg)
 
-    n0, s, e, i, r, beta, sigma, gamma = tab_arg #wartości początkowe
-    seir_model(n0, s, e, i, r, beta, sigma, gamma)
+    
+    #n0, s, e, i, r, beta, sigma, gamma = tab_arg #wartości początkowe
+    r = seir_model(1000,999,1,0,0, 1.34,0.19,0.34)
+    r.savefig("standard.png")
+    seir_model(1000,999,1,0,0, 0.75,0.19,0.34).savefig("beta_0.75_.png")
+    seir_model(1000,999,1,0,0, 1.34,0.10,0.34).savefig("sigma_0.10_.png")
+    seir_model(1000,999,1,0,0, 1.34,0.19,0.28).savefig("gamma_0.28_.png")
+    

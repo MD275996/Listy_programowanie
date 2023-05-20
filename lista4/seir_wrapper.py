@@ -19,12 +19,12 @@ tab_arg.remove(tab_arg[0])
 if len(tab_arg)%2==0:
     while len(tab_arg)>1:
         arg = tab_arg.pop()
-        if 'delta' in arg :
-            e = float(tab_arg.pop())
+        if 'beta' in arg :
+            beta = float(tab_arg.pop())
         elif 'sigma' in arg :
-            e = float(tab_arg.pop())
+            sigma = float(tab_arg.pop())
         elif 'gamma' in arg :
-            e = float(tab_arg.pop())
+            gamma = float(tab_arg.pop())
         elif 'n' in arg or 'N' in arg:
             n = float(tab_arg.pop())
         elif 's' in arg or 'S' in arg:
