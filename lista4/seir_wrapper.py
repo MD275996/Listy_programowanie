@@ -1,4 +1,4 @@
-import seir 
+import seir
 import sys
 
 #ustawienie domyślnych wartosci
@@ -7,15 +7,17 @@ s=999
 e=1
 i=0
 r=0
-beta = 0.8
-sigma = 0.7
-gamma = 0.4
+beta = 1.34
+sigma = 0.19
+gamma = 0.34
 
-tab_arg = sys.argv
+tab_arg = list(sys.argv)
 tab_arg.remove(tab_arg[0])
 
 
 #to boli w oczy, ale to działa
+
+print(len(tab_arg))
 if len(tab_arg)%2==0:
     while len(tab_arg)>1:
         arg = tab_arg.pop()
@@ -35,6 +37,7 @@ if len(tab_arg)%2==0:
             i = float(tab_arg.pop())
         elif 'r' in arg or 'R' in arg:
             e = float(tab_arg.pop())
+        print(n,s,e,i,r,beta,sigma,gamma)            
 
-seir.seir_model(n,s,e,i,r,beta,sigma,gamma)
+#seir.seir_model(n,s,e,i,r,beta,sigma,gamma)
 

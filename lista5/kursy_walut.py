@@ -55,7 +55,10 @@ def zmiana_clicked():
 def oblicz_clicked():
     curr_in = combo_opcja1.get()
     curr_out = combo_opcja2.get()
-    value = float(entry_waluta.get())
+    try:
+        value = float(entry_waluta.get())
+    except:
+        wynik.set("Podano niepoprawną wartość")
     print(curr_in,curr_out,value)
     output = przelicz(curr_in, curr_out, value)
     wynik.set(output)
@@ -122,7 +125,7 @@ label_wynik = Label(right_frame, textvariable=wynik)
 label_wynik.pack(padx=30,pady=20)
 
 
-button_zakoncz = Button(right_frame, text="zakończ")
+button_zakoncz = Button(right_frame, text="zakończ", command=exit)
 button_zakoncz.pack()
 
 #======================================================================================
